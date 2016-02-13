@@ -261,4 +261,13 @@ atom10_test() ->
 	{title, "First entry title"} = lists:keyfind(title, 1, Entry),
 	ok = application:stop(feedparser).
 
+atom11_test() ->
+	ok = application:start(feedparser),
+	{ok, Data} = file:read_file("../atom11.xml"),
+	{ok, Atom} = feedparser:parse(Data),
+	{entries, [Entry|_]} = lists:keyfind(entries, 1, Atom),
+	error_logger:info_report(Entry),
+	{title, "Eligendi quo incidunt sed dolor suscipit corporis quidem."} = lists:keyfind(title, 1, Entry),
+	ok = application:stop(feedparser).
+
 -endif.

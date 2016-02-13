@@ -25,7 +25,7 @@ def conv(term, root, binary):
 				'icon', 'id', 'image', 'info', 'label', 'language',
 				'length', 'license', 'link', 'links', 'logo', 'name',
 				'namespaces', 'path', 'port', 'protocol', 'published',
-				'publisher', 'ref', 'registerProcedure', 'relationships',
+				'publisher', 'ref', 'registerProcedure', 'rel', 'relationships',
 				'rights', 'scheme', 'source', 'subtitle', 'summary',
 				'tags', 'term', 'textinput', 'title', 'ttl', 'type',
 				'updated', 'value', 'vcard', 'version', 'width', 'xfn'

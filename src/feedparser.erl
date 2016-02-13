@@ -66,6 +66,7 @@ start_link(_) ->
 		| {links, [[
 			  {ref, String}
 			| {type, String}
+			| {rel, String}
 			| {href, String}
 			| {title, String}
 		  ]]}
@@ -121,6 +122,7 @@ start_link(_) ->
 		| {links, [[
 			  {ref, String}
 			| {type, String}
+			| {rel, String}
 			| {href, String}
 			| {title, String}
 		  ]]}
@@ -138,6 +140,7 @@ start_link(_) ->
 			| {links, [[
 				  {ref, String}
 				| {type, String}
+				| {rel, String}
 				| {href, String}
 				| {title, String}
 			  ]]}
@@ -265,8 +268,12 @@ atom11_test() ->
 	ok = application:start(feedparser),
 	{ok, Data} = file:read_file("../atom11.xml"),
 	{ok, Atom} = feedparser:parse(Data),
+	{feed, Feed} = lists:keyfind(feed, 1, Atom),
+	{links, Links} = lists:keyfind(links, 1, Feed),
+	[PubSubHubbub] = [X || X <- Links, proplists:get_value(rel, X) == "hub"],
+	{href, "https://example.com/?pushpress=hub"} = lists:keyfind(href, 1, [X || {href,_} = X <- PubSubHubbub]),
+
 	{entries, [Entry|_]} = lists:keyfind(entries, 1, Atom),
-	error_logger:info_report(Entry),
 	{title, "Eligendi quo incidunt sed dolor suscipit corporis quidem."} = lists:keyfind(title, 1, Entry),
 	ok = application:stop(feedparser).
 
